@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Student {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+const X = ["Long", 12, "Nhat", 11, 14, "Minh", "Hoang"];
+const user = [];
+const list = [];
+const arrName = [];
+const arrAge = [];
+for (let index = 0; index < X.length; index++) {
+    if (isNaN(X[index])) {
+        
+        arrName.push(X[index]);
+    }
+    else {
+    
+        arrAge.push(X[index]);
+    }
+    
+}
+console.log(arrName);
+console.log(arrAge);
+
+
+for (let i = 0; i < arrName.length; i++) {
+    for (let j = 0; j < arrAge.length; j++) {
+        console.log(arrName[i] + '' + arrAge[j]);
+        const std  = new Student(arrName[i], arrAge[j]);
+        list.push(std);
+    }
+}
+
+console.log(list);
+    </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+    <input type="text"id='name'>
+    <input type="text"id='age'>
+    <button onclick='add()'>'add user'</button>
+</div>
+  <div>
+    <input type="text"id=search>
+    <button onclick='searchName()'>'search name'</button>
+    <button onclick='searchAge()'>'search age'</button>
+    <button onclick="searchAll()">Search all</button>
+    <button onclick="restart()">Restart list</button>
+  </div>
+    
+    <ul id ='user'></ul>
+
+</body>
+<script>
+         class Student {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+const X = ["Long", 12, "Nhat", 11, 14, "Minh", "Hoang"];
+
+const list = [];
+const arrName = [];
+const arrAge = [];
+for (let index = 0; index < X.length; index++) {
+    if (isNaN(X[index])) {
+        
+        arrName.push(X[index]);
+    }
+    else {
+    
+        arrAge.push(X[index]);
+    }
+    
+}
+console.log(arrName);
+console.log(arrAge);
+
+
+for (let i = 0; i < arrName.length; i++) {
+    for (let j = 0; j < arrAge.length; j++) {
+        console.log(arrName[i] + '' + arrAge[j]);
+        const std = new Student(arrName[i], arrAge[j]);
+        list.push(std);
+    }
+}
+
+console.log(list);
+let listid = 0
+    function createDom(){
+        let html = '';
+            for( let i = 0;i < list.length; i++){
+            html += 
+                `
+                <li id="${i}">
+                    <button onClick="remove(${i})">Remove</button>
+                    <button onClick="update(${i})">Update</button>
+                    <p id="${i}-content" style="color:${list[i]};">
+                       Name:${list[i].name} - Age:${list[i].age}
+                        
+                    </p>
+                </li>
+                `;
+                document.getElementById("user").innerHTML = html;
+            }
+    }
+    createDom()
+    document.getElementById("name").addEventListener('keyup',function (event) {
+          if (event.keyCode === 13) {
+            event.preventDefault();
+            add();
+        }   
+    })
+    document.getElementById("age").addEventListener('keyup',function (event) {
+          if (event.keyCode === 13) {
+            event.preventDefault();
+            add();
+        }   
+    })
+    function add() {
+            let name = document.getElementById('name').value;
+            name = name.replace( /(<([^>]+)>)/ig, '');
+
+            let age = document.getElementById('age').value;
+            age = age.replace( /(<([^>]+)>)/ig, '');
+
+            if(!name ||!age ) {
+              alert('Please add full');
+              return;
+            }
+            list.push({name,age});
+            createDom();
+    }
+    function remove(listid) {
+        list.splice(listid,1);
+        createDom();
+    }
+    function update(listid) {
+        let name = document.getElementById('name').value;
+            name = name.replace( /(<([^>]+)>)/ig, '');
+
+            let age = document.getElementById('age').value;
+            age = age.replace( /(<([^>]+)>)/ig, '');
+
+            if(!name ||!age ) {
+              alert('Please add full');
+              return;
+            }
+            list[listid].name = name;
+            list[listid].age = age ;
+          
+            createDom();
+            
+           
+    }  
+
+let result = []
+
+
+function createSearchDom(){
+    let html = '';
+        for( let i = 0;i < result.length; i++){
+            html += 
+            `
+            <li id="${i}">
+                <button onClick="remove(${i})">Remove</button>
+                <button onClick="update(${i})">Update</button>
+                <p id="${i}-content">
+                    Name: ${result[i].name} - Age : ${result[i].age}
+                </p>
+            </li>
+            `;
+        }
+        document.getElementById("user").innerHTML = html;
+}; 
+
+function searchName() {
+        result = [];
+        let keyword =  document.getElementById('search').value;
+        for (let i = 0; i < list.length; i++) {
+            if(list[i].name.toLowerCase() === keyword.toLowerCase()) {
+                result.push(list[i]);
+            }
+        }
+        createSearchDom();
+    }
+    function searchAge() {
+        result = [];
+        let keyword =  document.getElementById('search').value;
+        for (let i = 0; i < list.length; i++) {
+            if(list[i].age.toString().toLowerCase() === keyword.toLowerCase()) {
+                result.push(list[i]);
+            }
+        }
+        createSearchDom();
+    }
+    
+    function searchAll() {
+        result = [];
+        let keyword =  document.getElementById('search').value;
+        for (let i = 0; i < list.length; i++) {
+            if(list[i].name.toLowerCase() === keyword.toLowerCase() 
+                || list[i].age.toString().toLowerCase() === keyword.toLowerCase()) {
+                result.push(list[i]);
+            }
+        }
+        createSearchDom();
+    }    
+
+    function restart() {
+        createDom();
+    }
+</script>
+</html>
